@@ -17,17 +17,18 @@ public:
     static std::vector<std::string> getDatasetNames();
 
     /**
-     * Opens the datasets json file and returns json content. This content are basic query parameters.
-     * @param name of the dataset
-     * @return json defining the OGR dataset
+     * Opens the datasets json file and returns its content as a json object. The content is the basic query
+     * parameters for opening the corresponding vector file with the OGR Source Operator.
+     * @param name: name of the dataset to open.
+     * @return json object defining the OGR dataset
      */
     static Json::Value getDatasetDescription(const std::string &name);
 
     /**
-     * Open the description for the dataset and append that json by the available layers in
-     * the vector file on disk. Therefore the vector file is opened. Additionally for every layer the
-     * numeric and textual attribtues of that layer are provided.
-     * @param dataset_name
+     * Returns a json object containing all the available layers in the vector file on disk.
+     * Therefore the vector file is opened with OGR. Additionally for every layer the numeric
+     * and textual attributes of that layer are provided.
+     * @param dataset_name: name of the dataset to open.
      * @return dataset description json appended by information about available layers.
      */
     static Json::Value getDatasetListing(const std::string &dataset_name);

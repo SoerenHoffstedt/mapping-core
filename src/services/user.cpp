@@ -88,7 +88,6 @@ void UserService::run() {
 			for(const auto &name : ogr_source_names){
 				if(user.hasPermission("data.ogr_source." + name)){
                     Json::Value description = OGRSourceDatasets::getDatasetListing(name);
-					description["name"] = name;
                     description["operator"] = "ogr_source";
 
 					// TODO: resolve name clashes

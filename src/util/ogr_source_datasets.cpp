@@ -35,18 +35,18 @@ std::vector<std::string> OGRSourceDatasets::getDatasetNames(){
 
     return filenames;
 }
-
+#include <iostream>
 Json::Value OGRSourceDatasets::getDatasetListing(const std::string &dataset_name){
-    Json::Value root = getDatasetDescription(dataset_name);
+    Json::Value desc = getDatasetDescription(dataset_name);
+    Json::Value root;
+    Json::Value columns = desc["columns"];
 
-    Json::Value columns = root["columns"];
-
-    bool isCsv = OGRSourceUtil::hasSuffix(root["filename"].asString(), ".csv") || OGRSourceUtil::hasSuffix(root["filename"].asString(), ".tsv");
+    bool isCsv = OGRSourceUtil::hasSuffix(desc["filename"].asString(), ".csv") || OGRSourceUtil::hasSuffix(desc["filename"].asString(), ".tsv");
 
     Json::Value layer_array(Json::ValueType::arrayValue);
 
     GDALAllRegister();
-    GDALDataset *dataset = OGRSourceUtil::openGDALDataset(root);
+    GDALDataset *dataset = OGRSourceUtil::openGDALDataset(desc);
 
     if(dataset == nullptr){
         throw OperatorException("OGR Source Datasets: Can not load dataset");
